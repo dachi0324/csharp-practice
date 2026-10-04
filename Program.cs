@@ -4,7 +4,17 @@ using System.Runtime.InteropServices;
 
 Animal a = new Dog("rex", 3, "labrador");
 a.Eat();
+List<Animal> animals = new List<Animal>
+{
+    new Dog("Rex", 3, "Labrador"),
+    new Cat("Kitty", 2, "White"),
+    new Animal("Generic", 1)
+};
 
+foreach(Animal i in animals)
+{
+    i.Makesound();
+}
 
 class Animal
 {
@@ -21,7 +31,10 @@ class Animal
     {
         Console.WriteLine(Name + " eating");
     }
-    
+    public virtual void Makesound()
+    {
+
+    }
     
 }
 
@@ -32,6 +45,10 @@ class Dog : Animal
     {
         Breed = breed;
         
+    }
+    public override void Makesound()
+    {
+        Console.WriteLine(Name + "says woof!");
     }
 
     public void Bark()
@@ -51,5 +68,11 @@ class Cat : Animal
     public void Meow()
     {
         Console.WriteLine(Name + "mewo");
+    }
+
+
+    public override void Makesound()
+    {
+        Console.WriteLine(Name + "says Meow!!!");
     }
 }
