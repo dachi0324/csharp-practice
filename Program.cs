@@ -1,44 +1,55 @@
-﻿BankAccount account1 = new BankAccount(100);
-account1.Deposit(50);
-Console.WriteLine($"Balance: {account1.Balance}");
-account1.Withdraw(30);
-Console.WriteLine($"Balance: {account1.Balance}");
-account1.Withdraw(500);
+﻿
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
-Console.WriteLine($"Balance: {account1.Balance}");
-public class BankAccount
+Animal a = new Dog("rex", 3, "labrador");
+a.Eat();
+
+
+class Animal
 {
-    private double balance;
+    public string Name = string.Empty;
+    public int Age;
 
-    public double Balance
+    public Animal(string name, int age)
     {
-        get{return balance;}
-       
-
+        Name = name;
+        Age = age;
     }
 
-    public BankAccount(double balance)
+    public void Eat()
     {
-        this.balance = balance;
+        Console.WriteLine(Name + " eating");
     }
-
-
-    public void Deposit(double amount)
-    {
-        if (amount > 0)
-        {
-            balance +=amount;
-        }
-    }
-    public void Withdraw(double amount)
-    {
-        if (amount <= 0)
-             Console.WriteLine("Amount must be positive");
-        else if (amount > balance)
-            Console.WriteLine("Not enough money");
-        else
-            balance -= amount;
-    }
-
     
+    
+}
+
+class Dog : Animal 
+{
+    public string Breed = string.Empty;
+    public Dog(string name, int age, string breed):base(name, age)
+    {
+        Breed = breed;
+        
+    }
+
+    public void Bark()
+    {
+        Console.WriteLine(Name + "woof");
+    }
+}
+
+class Cat : Animal
+{
+    public string Color = string.Empty;
+    public Cat(string name, int age, string color): base(name, age)
+    {
+        Color = color;
+    }
+
+    public void Meow()
+    {
+        Console.WriteLine(Name + "mewo");
+    }
 }
