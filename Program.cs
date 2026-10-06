@@ -1,78 +1,77 @@
-﻿
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-
-Animal a = new Dog("rex", 3, "labrador");
-a.Eat();
-List<Animal> animals = new List<Animal>
+﻿List<Shape> sizes = new List<Shape>
 {
-    new Dog("Rex", 3, "Labrador"),
-    new Cat("Kitty", 2, "White"),
-    new Animal("Generic", 1)
+    new Circle(5),
+    new Rectangle(5, 10),
+    new Square(10)
 };
+double total = 0;
 
-foreach(Animal i in animals)
+foreach (Shape i in sizes)
 {
-    i.Makesound();
-}
-
-class Animal
-{
-    public string Name = string.Empty;
-    public int Age;
-
-    public Animal(string name, int age)
-    {
-        Name = name;
-        Age = age;
-    }
-
-    public void Eat()
-    {
-        Console.WriteLine(Name + " eating");
-    }
-    public virtual void Makesound()
-    {
-
-    }
     
+    i.PrintInfo();
+    
+    total += i.CalculateArea();
+}
+Console.WriteLine($"Total: {total}");
+
+
+public abstract class Shape
+{
+    public abstract double CalculateArea();
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Area = {CalculateArea()}" );
+    }
 }
 
-class Dog : Animal 
+public class Circle : Shape
 {
-    public string Breed = string.Empty;
-    public Dog(string name, int age, string breed):base(name, age)
+    public double Radius;
+
+    public Circle(double radius)
     {
-        Breed = breed;
+        Radius = radius;
         
     }
-    public override void Makesound()
+    public override double CalculateArea()
     {
-        Console.WriteLine(Name + "says woof!");
+        return 3.14 * Radius *Radius;
     }
+    
 
-    public void Bark()
-    {
-        Console.WriteLine(Name + "woof");
-    }
+
 }
 
-class Cat : Animal
+public class Rectangle : Shape
 {
-    public string Color = string.Empty;
-    public Cat(string name, int age, string color): base(name, age)
+    public double Width;
+    public double Height;
+
+    public Rectangle(double width, double height)
     {
-        Color = color;
+        Width = width;
+        Height = height;
     }
 
-    public void Meow()
+    public override double CalculateArea()
     {
-        Console.WriteLine(Name + "mewo");
+        return Width * Height;
     }
 
+}
 
-    public override void Makesound()
+public class Square : Shape
+{
+    public double Size;
+
+    public Square(double height)
     {
-        Console.WriteLine(Name + "says Meow!!!");
+        Size = height;
+    }
+
+    public override double CalculateArea()
+    {
+        return Size * Size;
     }
 }
