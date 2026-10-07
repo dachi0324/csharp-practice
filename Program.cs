@@ -1,77 +1,61 @@
-﻿List<Shape> sizes = new List<Shape>
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+List<INotifier> notifier = new List<INotifier>
 {
-    new Circle(5),
-    new Rectangle(5, 10),
-    new Square(10)
+  new   EmailNotifier(),
+  new SmsNotifier(),
+  new PushNotifier()
 };
-double total = 0;
 
-foreach (Shape i in sizes)
+foreach (INotifier i in notifier)
 {
-    
-    i.PrintInfo();
-    
-    total += i.CalculateArea();
+    i.send("Hello");
 }
-Console.WriteLine($"Total: {total}");
-
-
-public abstract class Shape
+Order d = new Order("Pizza");
+d.Complete(new EmailNotifier());
+d.Complete(new SmsNotifier());
+d.Complete(new PushNotifier());
+interface INotifier
 {
-    public abstract double CalculateArea();
-    public void PrintInfo()
-    {
-        Console.WriteLine($"Area = {CalculateArea()}" );
-    }
+    void send(string message);
 }
 
-public class Circle : Shape
+class EmailNotifier : INotifier
 {
-    public double Radius;
-
-    public Circle(double radius)
+    public void send(string message)
     {
-        Radius = radius;
-        
+        Console.WriteLine($"Email: {message}");
     }
-    public override double CalculateArea()
-    {
-        return 3.14 * Radius *Radius;
-    }
-    
-
-
 }
 
-public class Rectangle : Shape
+class SmsNotifier : INotifier
 {
-    public double Width;
-    public double Height;
-
-    public Rectangle(double width, double height)
+    public void send(string message)
     {
-        Width = width;
-        Height = height;
+        Console.WriteLine($"Sms : {message}");
     }
-
-    public override double CalculateArea()
-    {
-        return Width * Height;
-    }
-
 }
 
-public class Square : Shape
+class PushNotifier : INotifier
 {
-    public double Size;
-
-    public Square(double height)
+    public void send(string message)
     {
-        Size = height;
+        Console.WriteLine($"Push:  {message}");
+    }
+}
+
+class Order
+{
+    public string ItemName;
+
+    public Order(string itemname)
+    {
+        ItemName = itemname;
     }
 
-    public override double CalculateArea()
+    public void Complete(INotifier notifier)
     {
-        return Size * Size;
+       Console.WriteLine($"{ItemName} completed"); 
+       notifier.send($"{ItemName} is ready" );
     }
 }
